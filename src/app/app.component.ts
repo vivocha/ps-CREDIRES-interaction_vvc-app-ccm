@@ -409,4 +409,21 @@ export class AppComponent implements OnInit, OnDestroy {
       return false
     };
   }
+  
+  /**
+   * Hide chatbox when a specific parameters is received by message.
+   */
+  isHideChatBoxMessage(message): boolean {
+    if (!!message.quick_replies) {
+        return true;
+      } else {
+        return false;
+      }
+  }
+    
+  renderChatBoxArea({isChatVisible, isChatBoxVisible, messages}: UiState): boolean {
+    const lastMessage = messages.slice().reverse().find(msg => !!msg.agent);
+    return isChatVisible && isChatBoxVisible && !this.isHideChatBoxMessage(lastMessage);
+  }
 }
+
