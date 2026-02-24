@@ -447,10 +447,10 @@ export class AppComponent implements OnInit, OnDestroy {
   handleUserInactivity() {
     (this.firstTimer as any) = setTimeout(() => {
       this.messageService.sendSystemMessage(this.warningMessage);
-      // Set DC field/value.
+      // TODO - Set DC field/value.
       (this.secondTimer as any) = setTimeout(() => {
         this.messageService.sendSystemMessage(this.closingMessage);
-        // Set DC field/value.
+        // TODO - Set DC field/value.
         this.interactionService.closeContact(this.closeDimensions);
       }, this.closingTimer * 1000);
     }, this.warningTimer * 1000);
