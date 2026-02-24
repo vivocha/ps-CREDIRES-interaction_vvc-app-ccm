@@ -1,5 +1,5 @@
 import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {VvcInteractionService, Dimension, UiState} from '@vivocha/client-interaction-core';
+import {VvcInteractionService, VvcMessageService, Dimension, UiState} from '@vivocha/client-interaction-core';
 import {ChatAreaComponent} from '@vivocha/client-interaction-layout';
 import {Observable, Subscription} from 'rxjs';
 
@@ -98,20 +98,22 @@ export class AppComponent implements OnInit, OnDestroy {
 
   public selector: string | null = null;
 
-  constructor(private interactionService: VvcInteractionService) {}
+  constructor(private interactionService: VvcInteractionService, private messageService: VvcMessageService) {}
 
   public warningTimer: number = 30; // Set as needed, default to 120 seconds.
   public warningMessage: string = 'Ti ringraziamo per averci contattato.\nHai ancora necessità di tempo? Puoi scegliere una delle seguenti opzioni.';
-  public firstTimer: number = 0;
+  public firstTimer = 0;
 
   public closingTimer: number = 30; // Set as needed, default to 120 seconds.
   public closingMessage: string = '💬 La chat sta per chiudersi, ti ringraziamo per averci contatatto.\nSe hai bisogno di assistenza, puoi:\n📞 Chiamarci al 0587 467707\n✉️ Scriverci a rcp@credires.it\nCordiali saluti, Credires Srl per American Express';
-  public secondTimer: number = 0;
+  public secondTimer = 0;
 
   ngOnInit() {
     this.appState$ = this.interactionService.getState();
     this.interactionService.init().subscribe(context => this.setInitialDimensions(context));
     this.interactionService.events().subscribe(evt => this.listenForEvents(evt));
+
+    this.handleUserInactivity();
 
     // listen to uiState changes in order to update the local reference used in services
     this.appUiStateSub = this.appState$.subscribe(uiState => {
@@ -336,6 +338,8 @@ export class AppComponent implements OnInit, OnDestroy {
       this.toggleEmojiPanel();
     }
     this.interactionService.sendText(value);
+    this.clearTimer();
+    this.handleUserInactivity();
   }
   setFullScreen() {
     this.expandWidget(true);
@@ -431,5 +435,24 @@ export class AppComponent implements OnInit, OnDestroy {
   renderChatBoxArea({isChatVisible, isChatBoxVisible, messages}: UiState): boolean {
     const lastMessage = messages.slice().reverse().find(msg => !!msg.agent);
     return isChatVisible && isChatBoxVisible && !this.isHideChatBoxMessage(lastMessage);
+  }
+
+  /**
+   * Handle user inactivity in a given time range.
+   */
+  handleUserInactivity() {
+    (this.firstTimer as any) = setTimeout(() => {
+      this.messageService.sendSystemMessage(this.warningMessage); // Must be set from the agent.
+      // Set DC field/value.
+      (this.secondTimer as any) = setTimeout(() => {
+        this.messageService.sendSystemMessage(this.closingMessage); // Must be set from the agent.
+        // Set DC field/value.
+        this.interactionService.closeContact(this.closeDimensions);
+      }, this.closingTimer * 1000);
+    }, this.warningTimer * 1000);
+  }
+  clearTimer() {
+    clearTimeout(this.firstTimer);
+    clearTimeout(this.secondTimer);
   }
 }
