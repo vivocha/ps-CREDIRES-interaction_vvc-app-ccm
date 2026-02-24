@@ -280,6 +280,8 @@ export class AppComponent implements OnInit, OnDestroy {
   }
   markRead(msgId: string){
     this.interactionService.markRead(msgId);
+    this.clearTimer();
+    this.handleUserInactivity();
   }
   maximizeCbn(isMobile: boolean, notRead: boolean) {
     this.interactionService.maximizeWidget(false, isMobile ? this.dimensions.fullscreen : this.dimensions.normal);
@@ -320,6 +322,8 @@ export class AppComponent implements OnInit, OnDestroy {
   }
   processQuickReply(reply) {
     this.interactionService.processQuickReply(reply);
+    this.clearTimer();
+    this.handleUserInactivity();
   }
   rejectAgentRequest(requestId) {
     this.interactionService.rejectAgentRequest(requestId);
