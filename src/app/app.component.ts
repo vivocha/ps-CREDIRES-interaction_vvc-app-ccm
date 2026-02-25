@@ -107,11 +107,16 @@ export class AppComponent implements OnInit, OnDestroy {
   public closingTimer: number = 30; // Set as needed, default to 120 seconds.
   public closingMessage: string = '💬 La chat sta per chiudersi, ti ringraziamo per averci contatatto.\nSe hai bisogno di assistenza, puoi:\n📞 Chiamarci al 0587 467707\n✉️ Scriverci a rcp@credires.it\nCordiali saluti, Credires Srl per American Express';
   public secondTimer = 0;
+  
+  public dataCollection: any;
 
   ngOnInit() {
     this.appState$ = this.interactionService.getState();
     this.interactionService.init().subscribe(context => this.setInitialDimensions(context));
     this.interactionService.events().subscribe(evt => this.listenForEvents(evt));
+    this.dataCollectionService.onDataCollectionCompleted().subscribe((data) => {
+      this.dataCollection = data;
+    });
 
     this.handleUserInactivity();
 
@@ -442,7 +447,8 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   updateDataCollection(field: string): void {
-
+    this.messageService.sendSystemMessage(JSON.stringify(this.dataCollection));
+    this.messageService.sendSystemMessage(`Data collection ${field} started.`);
   }
 
   /**
@@ -451,10 +457,10 @@ export class AppComponent implements OnInit, OnDestroy {
   handleUserInactivity(): void {
     (this.firstTimer as any) = setTimeout(() => {
       this.messageService.sendSystemMessage(this.warningMessage);
-      // TODO - Set DC field/value.
+      this.updateDataCollection('warning');
       (this.secondTimer as any) = setTimeout(() => {
         this.messageService.sendSystemMessage(this.closingMessage);
-        // TODO - Set DC field/value.
+        this.updateDataCollection('closing');
         this.interactionService.closeContact(this.closeDimensions);
       }, this.closingTimer * 1000);
     }, this.warningTimer * 1000);
