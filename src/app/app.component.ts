@@ -1,5 +1,5 @@
 import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {VvcInteractionService, VvcMessageService, Dimension, UiState} from '@vivocha/client-interaction-core';
+import {VvcInteractionService, VvcMessageService, VvcDataCollectionService, Dimension, UiState} from '@vivocha/client-interaction-core';
 import {ChatAreaComponent} from '@vivocha/client-interaction-layout';
 import {Observable, Subscription} from 'rxjs';
 
@@ -98,7 +98,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
   public selector: string | null = null;
 
-  constructor(private interactionService: VvcInteractionService, private messageService: VvcMessageService) {}
+  constructor(private interactionService: VvcInteractionService, private messageService: VvcMessageService, private dataCollectionService: VvcDataCollectionService) {}
 
   public warningTimer: number = 30; // Set as needed, default to 120 seconds.
   public warningMessage: string = 'Ti ringraziamo per averci contattato.\nHai ancora necessità di tempo? Puoi scegliere una delle seguenti opzioni.';
@@ -441,10 +441,14 @@ export class AppComponent implements OnInit, OnDestroy {
     return isChatVisible && isChatBoxVisible && !this.isHideChatBoxMessage(lastMessage);
   }
 
+  updateDataCollection(field: string): void {
+
+  }
+
   /**
    * Handle user inactivity in a given time range.
    */
-  handleUserInactivity() {
+  handleUserInactivity(): void {
     (this.firstTimer as any) = setTimeout(() => {
       this.messageService.sendSystemMessage(this.warningMessage);
       // TODO - Set DC field/value.
@@ -455,7 +459,7 @@ export class AppComponent implements OnInit, OnDestroy {
       }, this.closingTimer * 1000);
     }, this.warningTimer * 1000);
   }
-  clearTimer() {
+  clearTimer(): void {
     clearTimeout(this.firstTimer);
     clearTimeout(this.secondTimer);
   }
