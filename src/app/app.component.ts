@@ -114,7 +114,8 @@ export class AppComponent implements OnInit, OnDestroy {
     this.appState$ = this.interactionService.getState();
     this.interactionService.init().subscribe(context => this.setInitialDimensions(context));
     this.interactionService.events().subscribe(evt => this.listenForEvents(evt));
-    this.dataCollectionService.onDataCollectionCompleted().subscribe((data) => {
+
+    this.dataCollectionService.onDataCollectionCompleted().subscribe(data => {
       this.dataCollection = data;
     });
 
@@ -446,9 +447,19 @@ export class AppComponent implements OnInit, OnDestroy {
     return isChatVisible && isChatBoxVisible && !this.isHideChatBoxMessage(lastMessage);
   }
 
-  updateDataCollection(field: string): void {
+  /**
+   * Handle Data Collection update.
+   * @param {string} field - Name of the field to update.
+   */
+  async updateDataCollection(field: string): Promise<void> {
+    await this.dataCollectionService.submitDataCollection(this.dataCollection)
+      .then(() => {
+        console.log('yeeee');
+      })
+      .catch(error => {
+        console.log(error.message);
+      });
     this.messageService.sendSystemMessage(JSON.stringify(this.dataCollection));
-    this.messageService.sendSystemMessage(`Data collection ${field} started.`);
   }
 
   /**
