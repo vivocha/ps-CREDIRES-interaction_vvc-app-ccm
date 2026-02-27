@@ -452,7 +452,25 @@ export class AppComponent implements OnInit, OnDestroy {
    * @param {string} field - Name of the field to update.
    */
   async updateDataCollection(field: string): Promise<void> {
-    await this.dataCollectionService.submitDataCollection(this.dataCollection)
+    const dataCollectionDefinition = {
+      id: 'Customer_Test',
+      type: 'form',
+      labelId: 'DC.Customer_Test.LABELID',
+      fields: [
+
+      ]
+    };
+
+    const dataCollectionData = {
+
+    };
+
+    const data = {
+      dcDefinition: dataCollectionDefinition,
+      dcData: dataCollectionData
+    }
+
+    await this.dataCollectionService.submitDataCollection(data)
       .then(() => {
         console.log('yeeee');
       })
