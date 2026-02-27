@@ -457,13 +457,160 @@ export class AppComponent implements OnInit, OnDestroy {
       type: 'form',
       labelId: 'DC.Customer_Test.LABELID',
       fields: [
-
+        {
+            id: 'debitore',
+            type: 'string',
+            format: 'text',
+            labelId: 'DC.Customer_Test.FIELD.LABEL_ID.id_17639923204306976150151315',
+            required: false,
+            hidden: 'visitor',
+            editable: false,
+            editIfDefault: false,
+            doNotEncrypt: false
+          },
+          {
+            id: 'codpratica',
+            type: 'string',
+            format: 'text',
+            labelId: 'DC.Customer_Test.FIELD.LABEL_ID.id_17639923309929863090288317',
+            required: false,
+            hidden: 'visitor',
+            editable: false,
+            editIfDefault: false,
+            doNotEncrypt: false
+          },
+          {
+            id: 'link_pay',
+            type: 'string',
+            format: 'text',
+            labelId: 'DC.Customer_Test.FIELD.LABEL_ID.id_176399234157711234419226754',
+            required: false,
+            hidden: 'visitor',
+            editable: false,
+            editIfDefault: false,
+            doNotEncrypt: false
+          },
+          {
+            id: 'ob',
+            type: 'string',
+            format: 'text',
+            labelId: 'DC.Customer_Test.FIELD.LABEL_ID.id_17639923528658420682042616',
+            required: false,
+            hidden: 'visitor',
+            editable: false,
+            editIfDefault: false,
+            doNotEncrypt: false
+          },
+          {
+            id: 'agent_request',
+            type: 'string',
+            format: 'text',
+            labelId: 'DC.Customer_Test.FIELD.LABEL_ID.id_1771249996280733064228883',
+            required: false,
+            hidden: 'visitor',
+            editable: false,
+            editIfDefault: false,
+            defaultConstant: 'no',
+            doNotEncrypt: true
+          },
+          {
+            id: 'agent_response',
+            type: 'string',
+            format: 'text',
+            labelId: 'DC.Customer_Test.FIELD.LABEL_ID.id_177125009999882883762237285',
+            required: false,
+            hidden: 'visitor',
+            editable: false,
+            editIfDefault: false,
+            defaultConstant: 'no',
+            doNotEncrypt: true
+          },
+          {
+            id: 'out_of_business_hours',
+            type: 'string',
+            format: 'text',
+            labelId: 'DC.Customer_Test.FIELD.LABEL_ID.id_17712501566321029461656724',
+            required: false,
+            hidden: 'visitor',
+            editable: false,
+            editIfDefault: false,
+            defaultConstant: 'no',
+            doNotEncrypt: true
+          },
+          {
+            id: 'warning',
+            type: 'string',
+            format: 'text',
+            labelId: 'DC.Customer_Test.FIELD.LABEL_ID.id_17718591736304112449030078',
+            required: false,
+            hidden: 'both',
+            editable: false,
+            editIfDefault: false,
+            defaultConstant: 'no',
+            doNotEncrypt: true
+          },
+          {
+            id: 'closing',
+            type: 'string',
+            format: 'text',
+            labelId: 'DC.Customer_Test.FIELD.LABEL_ID.id_177186251617522304573047396',
+            required: false,
+            hidden: 'both',
+            editable: false,
+            editIfDefault: false,
+            defaultConstant: 'no',
+            doNotEncrypt: true
+          }
       ]
     };
 
-    const dataCollectionData = {
-
-    };
+    const dataCollectionData = [
+       {
+                name: 'agent_request',
+                type: 'text',
+                value: 'no',
+                desc: 'DC.Customer_Test.FIELD.LABEL_ID.id_1771249996280733064228883',
+                visible: true,
+                editable: false,
+                secure: false
+              },
+              {
+                name: 'agent_response',
+                type: 'text',
+                value: 'no',
+                desc: 'DC.Customer_Test.FIELD.LABEL_ID.id_177125009999882883762237285',
+                visible: true,
+                editable: false,
+                secure: false
+              },
+              {
+                name: 'out_of_business_hours',
+                type: 'text',
+                value: 'no',
+                desc: 'DC.Customer_Test.FIELD.LABEL_ID.id_17712501566321029461656724',
+                visible: true,
+                editable: false,
+                secure: false
+              },
+              {
+                name: 'warning',
+                type: 'text',
+                value: 'no',
+                desc: 'DC.Customer_Test.FIELD.LABEL_ID.id_17718591736304112449030078',
+                visible: false,
+                editable: false,
+                secure: false
+              },
+              {
+                name: 'closing',
+                type: 'text',
+                value: 'no',
+                desc: 'DC.Customer_Test.FIELD.LABEL_ID.id_177186251617522304573047396',
+                visible: false,
+                editable: false,
+                secure: false
+              }
+  ];
 
     const data = {
       dcDefinition: dataCollectionDefinition,
