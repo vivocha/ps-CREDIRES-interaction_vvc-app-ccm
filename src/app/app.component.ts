@@ -101,7 +101,7 @@ export class AppComponent implements OnInit, OnDestroy {
   constructor(private interactionService: VvcInteractionService, private messageService: VvcMessageService) {} // private dataCollectionService: VvcDataCollectionService
 
   public warningTimer: number = 30; // Set as needed, default to 120 seconds.
-  public warningMessage: string = 'Ti ringraziamo per averci contattato.\nHai ancora necessità di tempo? Puoi scegliere una delle seguenti opzioni.';
+  public warningMessage: string = 'Ti ringraziamo per averci contattato.\nHai ancora necessità di tempo?';
   public firstTimer = 0;
 
   public closingTimer: number = 30; // Set as needed, default to 120 seconds.
