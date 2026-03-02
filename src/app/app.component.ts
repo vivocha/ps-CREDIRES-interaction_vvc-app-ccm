@@ -1,5 +1,5 @@
 import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {VvcInteractionService, VvcMessageService, Dimension, UiState} from '@vivocha/client-interaction-core'; // VvcDataCollectionService
+import {VvcInteractionService, VvcMessageService, Dimension, UiState} from '@vivocha/client-interaction-core';
 import {ChatAreaComponent} from '@vivocha/client-interaction-layout';
 import {Observable, Subscription} from 'rxjs';
 
@@ -107,17 +107,11 @@ export class AppComponent implements OnInit, OnDestroy {
   public closingTimer: number = 30; // Set as needed, default to 120 seconds.
   public closingMessage: string = '💬 La chat sta per chiudersi, ti ringraziamo per averci contatatto.\nSe hai bisogno di assistenza, puoi:\n📞 Chiamarci al 0587 467707\n✉️ Scriverci a rcp@credires.it\nCordiali saluti, Credires Srl per American Express';
   public secondTimer = 0;
-  
-  // public dataCollection: any;
 
   ngOnInit() {
     this.appState$ = this.interactionService.getState();
     this.interactionService.init().subscribe(context => this.setInitialDimensions(context));
     this.interactionService.events().subscribe(evt => this.listenForEvents(evt));
-
-    // this.dataCollectionService.onDataCollectionCompleted().subscribe(data => {
-    //   this.dataCollection = data;
-    // });
 
     this.handleUserInactivity();
 
@@ -431,7 +425,7 @@ export class AppComponent implements OnInit, OnDestroy {
       return false
     };
   }
-  
+
   /**
    * Hide chatbox when a specific parameters is received by message.
    */
@@ -448,196 +442,13 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * Handle Data Collection update.
-   * @param {string} field - Name of the field to update.
-   */
-  async updateDataCollection(field: string): Promise<void> {
-
-  //   const dataCollectionDefinition = {
-  //     id: 'Customer_Test',
-  //     type: 'form',
-  //     labelId: 'DC.Customer_Test.LABELID',
-  //     fields: [
-  //       {
-  //           id: 'debitore',
-  //           type: 'string',
-  //           format: 'text',
-  //           labelId: 'DC.Customer_Test.FIELD.LABEL_ID.id_17639923204306976150151315',
-  //           required: false,
-  //           hidden: 'visitor',
-  //           editable: false,
-  //           editIfDefault: false,
-  //           doNotEncrypt: false
-  //         },
-  //         {
-  //           id: 'codpratica',
-  //           type: 'string',
-  //           format: 'text',
-  //           labelId: 'DC.Customer_Test.FIELD.LABEL_ID.id_17639923309929863090288317',
-  //           required: false,
-  //           hidden: 'visitor',
-  //           editable: false,
-  //           editIfDefault: false,
-  //           doNotEncrypt: false
-  //         },
-  //         {
-  //           id: 'link_pay',
-  //           type: 'string',
-  //           format: 'text',
-  //           labelId: 'DC.Customer_Test.FIELD.LABEL_ID.id_176399234157711234419226754',
-  //           required: false,
-  //           hidden: 'visitor',
-  //           editable: false,
-  //           editIfDefault: false,
-  //           doNotEncrypt: false
-  //         },
-  //         {
-  //           id: 'ob',
-  //           type: 'string',
-  //           format: 'text',
-  //           labelId: 'DC.Customer_Test.FIELD.LABEL_ID.id_17639923528658420682042616',
-  //           required: false,
-  //           hidden: 'visitor',
-  //           editable: false,
-  //           editIfDefault: false,
-  //           doNotEncrypt: false
-  //         },
-  //         {
-  //           id: 'agent_request',
-  //           type: 'string',
-  //           format: 'text',
-  //           labelId: 'DC.Customer_Test.FIELD.LABEL_ID.id_1771249996280733064228883',
-  //           required: false,
-  //           hidden: 'visitor',
-  //           editable: false,
-  //           editIfDefault: false,
-  //           defaultConstant: 'no',
-  //           doNotEncrypt: true
-  //         },
-  //         {
-  //           id: 'agent_response',
-  //           type: 'string',
-  //           format: 'text',
-  //           labelId: 'DC.Customer_Test.FIELD.LABEL_ID.id_177125009999882883762237285',
-  //           required: false,
-  //           hidden: 'visitor',
-  //           editable: false,
-  //           editIfDefault: false,
-  //           defaultConstant: 'no',
-  //           doNotEncrypt: true
-  //         },
-  //         {
-  //           id: 'out_of_business_hours',
-  //           type: 'string',
-  //           format: 'text',
-  //           labelId: 'DC.Customer_Test.FIELD.LABEL_ID.id_17712501566321029461656724',
-  //           required: false,
-  //           hidden: 'visitor',
-  //           editable: false,
-  //           editIfDefault: false,
-  //           defaultConstant: 'no',
-  //           doNotEncrypt: true
-  //         },
-  //         {
-  //           id: 'warning',
-  //           type: 'string',
-  //           format: 'text',
-  //           labelId: 'DC.Customer_Test.FIELD.LABEL_ID.id_17718591736304112449030078',
-  //           required: false,
-  //           hidden: 'both',
-  //           editable: false,
-  //           editIfDefault: false,
-  //           defaultConstant: 'no',
-  //           doNotEncrypt: true
-  //         },
-  //         {
-  //           id: 'closing',
-  //           type: 'string',
-  //           format: 'text',
-  //           labelId: 'DC.Customer_Test.FIELD.LABEL_ID.id_177186251617522304573047396',
-  //           required: false,
-  //           hidden: 'both',
-  //           editable: false,
-  //           editIfDefault: false,
-  //           defaultConstant: 'no',
-  //           doNotEncrypt: true
-  //         }
-  //     ]
-  //   };
-
-  //   const dataCollectionData = [
-  //      {
-  //               name: 'agent_request',
-  //               type: 'text',
-  //               value: 'no',
-  //               desc: 'DC.Customer_Test.FIELD.LABEL_ID.id_1771249996280733064228883',
-  //               visible: true,
-  //               editable: false,
-  //               secure: false
-  //             },
-  //             {
-  //               name: 'agent_response',
-  //               type: 'text',
-  //               value: 'no',
-  //               desc: 'DC.Customer_Test.FIELD.LABEL_ID.id_177125009999882883762237285',
-  //               visible: true,
-  //               editable: false,
-  //               secure: false
-  //             },
-  //             {
-  //               name: 'out_of_business_hours',
-  //               type: 'text',
-  //               value: 'no',
-  //               desc: 'DC.Customer_Test.FIELD.LABEL_ID.id_17712501566321029461656724',
-  //               visible: true,
-  //               editable: false,
-  //               secure: false
-  //             },
-  //             {
-  //               name: 'warning',
-  //               type: 'text',
-  //               value: 'no',
-  //               desc: 'DC.Customer_Test.FIELD.LABEL_ID.id_17718591736304112449030078',
-  //               visible: false,
-  //               editable: false,
-  //               secure: false
-  //             },
-  //             {
-  //               name: 'closing',
-  //               type: 'text',
-  //               value: 'no',
-  //               desc: 'DC.Customer_Test.FIELD.LABEL_ID.id_177186251617522304573047396',
-  //               visible: false,
-  //               editable: false,
-  //               secure: false
-  //             }
-  // ];
-
-  //   const data = {
-  //     dcDefinition: dataCollectionDefinition,
-  //     dcData: dataCollectionData
-  //   }
-
-  //   await this.dataCollectionService.submitDataCollection(data)
-  //     .then(() => {
-  //       console.log('yeeee');
-  //     })
-  //     .catch(error => {
-  //       console.log(error.message);
-  //     });
-    
-  }
-
-  /**
    * Handle user inactivity in a given time range.
    */
   handleUserInactivity(): void {
     (this.firstTimer as any) = setTimeout(() => {
       this.messageService.sendSystemMessage(this.warningMessage);
-      this.updateDataCollection('warning');
       (this.secondTimer as any) = setTimeout(() => {
         this.messageService.sendSystemMessage(this.closingMessage);
-        this.updateDataCollection('closing');
         this.interactionService.closeContact(this.closeDimensions);
       }, this.closingTimer * 1000);
     }, this.warningTimer * 1000);
