@@ -447,8 +447,18 @@ export class AppComponent implements OnInit, OnDestroy {
   handleUserInactivity(): void {
     (this.firstTimer as any) = setTimeout(() => {
       this.messageService.sendSystemMessage(this.warningMessage);
+      this.interactionService.sendPostBack({
+      code: 'message',
+      type: 'postback',
+      body: JSON.stringify('warning')
+    });
       (this.secondTimer as any) = setTimeout(() => {
         this.messageService.sendSystemMessage(this.closingMessage);
+        this.interactionService.sendPostBack({
+          code: 'message',
+          type: 'postback',
+          body: JSON.stringify('closing')
+        });
         this.interactionService.closeContact(this.closeDimensions);
       }, this.closingTimer * 1000);
     }, this.warningTimer * 1000);
