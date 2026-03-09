@@ -448,9 +448,9 @@ export class AppComponent implements OnInit, OnDestroy {
     (this.firstTimer as any) = setTimeout(() => {
       this.messageService.sendSystemMessage(this.warningMessage);
       this.interactionService.sendPostBack({
-      code: 'message',
-      type: 'postback',
-      payload: 'warning'
+        code: 'message',
+        type: 'postback',
+        payload: 'warning'
     });
       (this.secondTimer as any) = setTimeout(() => {
         this.messageService.sendSystemMessage(this.closingMessage);
