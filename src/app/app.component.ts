@@ -450,14 +450,14 @@ export class AppComponent implements OnInit, OnDestroy {
       this.interactionService.sendPostBack({
       code: 'message',
       type: 'postback',
-      body: JSON.stringify('warning')
+      payload: 'warning'
     });
       (this.secondTimer as any) = setTimeout(() => {
         this.messageService.sendSystemMessage(this.closingMessage);
         this.interactionService.sendPostBack({
           code: 'message',
           type: 'postback',
-          body: JSON.stringify('closing')
+          payload: 'closing'
         });
         this.interactionService.closeContact(this.closeDimensions);
       }, this.closingTimer * 1000);
