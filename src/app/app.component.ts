@@ -100,11 +100,11 @@ export class AppComponent implements OnInit, OnDestroy {
 
   constructor(private interactionService: VvcInteractionService, private messageService: VvcMessageService) {} // private dataCollectionService: VvcDataCollectionService
 
-  public warningTimer: number = 30; // Set as needed, default to 120 seconds.
+  public warningTimer: number = 120; // Set as needed, default to 120 seconds.
   public warningMessage: string = 'Ti ringraziamo per averci contattato.\nHai ancora necessità di tempo?';
   public firstTimer = 0;
 
-  public closingTimer: number = 30; // Set as needed, default to 120 seconds.
+  public closingTimer: number = 120; // Set as needed, default to 120 seconds.
   public closingMessage: string = '💬 La chat sta per chiudersi, ti ringraziamo per averci contatatto.\nSe hai bisogno di assistenza, puoi:\n📞 Chiamarci al 0587 467707\n✉️ Scriverci a rcp@credires.it\nCordiali saluti, Credires Srl per American Express';
   public secondTimer = 0;
 
