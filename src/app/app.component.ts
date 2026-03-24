@@ -108,6 +108,8 @@ export class AppComponent implements OnInit, OnDestroy {
   public closingMessage: string = '💬 La chat sta per chiudersi, ti ringraziamo per averci contatatto.\nSe hai bisogno di assistenza, puoi:\n📞 Chiamarci al 0587 467707\n✉️ Scriverci a rcp@credires.it\nCordiali saluti, Credires Srl per American Express';
   public secondTimer = 0;
 
+  public disableQuickRepliesButtons: boolean = false;
+
   ngOnInit() {
     this.appState$ = this.interactionService.getState();
     this.interactionService.init().subscribe(context => this.setInitialDimensions(context));
@@ -459,6 +461,7 @@ export class AppComponent implements OnInit, OnDestroy {
           type: 'postback',
           payload: 'closing'
         });
+        this.disableQuickRepliesButtons = true;
         this.interactionService.closeContact(this.closeDimensions);
       }, this.closingTimer * 1000);
     }, this.warningTimer * 1000);
