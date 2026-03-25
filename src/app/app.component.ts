@@ -452,6 +452,7 @@ export class AppComponent implements OnInit, OnDestroy {
       this.interactionService.sendPostBack({
         code: 'message',
         type: 'postback',
+        title: 'Il debitore è inattivo da 2 min.: è stato inviato un messaggio di cortesia.',
         payload: 'warning'
     });
       (this.secondTimer as any) = setTimeout(() => {
@@ -459,6 +460,7 @@ export class AppComponent implements OnInit, OnDestroy {
         this.interactionService.sendPostBack({
           code: 'message',
           type: 'postback',
+          title: 'Il debitore è inattivo da 4 min.: il contatto è stato chiuso automaticamente.',
           payload: 'closing'
         });
         this.disableQuickRepliesButtons = true;
